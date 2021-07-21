@@ -66,3 +66,10 @@ User=myuser
 Group=myuse
 ```
 
+# 讨论群组
+
+[发布频道](https://t.me/BotMaid)
+
+[讨论组](https://t.me/BotMaid_Discuss)
+
+
