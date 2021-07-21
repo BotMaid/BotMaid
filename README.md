@@ -4,7 +4,7 @@
 
 # 使用说明
 
-- clone 项目并进入文件夹 `aas`
+- clone 项目并进入文件夹 `git clone https://github.com/BotMaid/BotMaid.git && cd BotMaid`
 
 - 首先复制 `配置文件`
 
