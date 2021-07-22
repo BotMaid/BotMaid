@@ -1,7 +1,7 @@
 class pluginClass:
     """这是说明"""
 
-    # 要注册命令
+    # 要注册的命令
     registCommand = "example", "example1",
 
     # 是否监听所有消息
