@@ -11,7 +11,7 @@ class pluginClass:
     async def onCommandMessageReceivedListener(client, event, command, args):
         import sqlite3
         if args[0] == "add":
-            key, reply = args[1].split("===")
+            key, reply = " ".join(args[1:]).split("===")
             conn = sqlite3.connect("configs/keywords/keywords.db")
             cursor = conn.cursor()
             if cursor.execute('select * from keywords where [key]=? and [group]=?',
