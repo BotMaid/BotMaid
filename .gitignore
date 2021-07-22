@@ -214,8 +214,12 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 
-#BotMaid
+# BotMaid
 BotMaid.session
 BotMaid.session-journal
 config.ini
 configs/
+
+
+# macOS
+.DS_Store
