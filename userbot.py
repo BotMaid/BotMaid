@@ -60,6 +60,7 @@ def start():
                     commArgs = event.raw_text.split(" ")
                     commStr = commArgs[0][len(COMMAND_HEADER):]
                     await pluginDict[commStr].onCommandMessageReceivedListener(client, event, commStr, commArgs[1::])
+                    return
 
             for plugin in pluginDict["plainMessageListenerList"]:
                 await plugin.onMessageReceivedListener(client, event, event.raw_text)
