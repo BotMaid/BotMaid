@@ -60,7 +60,7 @@ class pluginClass:
             cursor.close()
             conn.close()
 
-        reFlashDict()
+        pluginClass.reFlashDict()
 
     async def onMessageReceivedListener(client, event, rawMsg):
         if not keywordsDict:
@@ -73,32 +73,31 @@ class pluginClass:
         except Exception as ex:
             pass
 
+    def reFlashDict():
+        import os
+        import sqlite3
+        if not os.path.exists("configs/keywords"):
+            os.makedirs("configs/keywords")
+            conn = sqlite3.connect("configs/keywords/keywords.db")
+            cursor = conn.cursor()
+            cursor.execute("""CREATE TABLE keywords (
+                                            [key]   TEXT,
+                                            reply   TEXT,
+                                            [group] TEXT
+                                        );
+                                        """)
+            cursor.close()
+            conn.commit()
+        else:
+            conn = sqlite3.connect("configs/keywords/keywords.db")
 
-def reFlashDict():
-    import os
-    import sqlite3
-    if not os.path.exists("configs/keywords"):
-        os.makedirs("configs/keywords")
-        conn = sqlite3.connect("configs/keywords/keywords.db")
         cursor = conn.cursor()
-        cursor.execute("""CREATE TABLE keywords (
-                                        [key]   TEXT,
-                                        reply   TEXT,
-                                        [group] TEXT
-                                    );
-                                    """)
+        for key, reply, group in cursor.execute('select * from keywords').fetchall():
+            if not keywordsDict.get(group, {}):
+                keywordsDict[group] = {}
+            keywordsDict[group][key] = reply
         cursor.close()
-        conn.commit()
-    else:
-        conn = sqlite3.connect("configs/keywords/keywords.db")
-
-    cursor = conn.cursor()
-    for key, reply, group in cursor.execute('select * from keywords').fetchall():
-        if not keywordsDict.get(group, {}):
-            keywordsDict[group] = {}
-        keywordsDict[group][key] = reply
-    cursor.close()
-    conn.close()
+        conn.close()
 
 
-reFlashDict()
+pluginClass.reFlashDict()
