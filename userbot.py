@@ -22,6 +22,7 @@ def start():
     class pluginLoader:
         def __init__(self):
             pluginDict["plainMessageListenerList"] = []
+            pluginDict["chatActionListenerList"] = []
             self.loadPlugins()
 
         def loadPlugins(self):
@@ -36,9 +37,12 @@ def start():
             for command in plugin.pluginClass.registCommand:
                 if command in disableCommandList:
                     continue
-                pluginDict[command] = plugin.pluginClass
+                pluginObj = plugin.pluginClass()
+                pluginDict[command] = pluginObj
             if plugin.pluginClass.listenPlainMessage:
-                pluginDict["plainMessageListenerList"].append(plugin.pluginClass)
+                pluginDict["plainMessageListenerList"].append(pluginObj)
+            if plugin.pluginClass.listenChatAction:
+                pluginDict["chatActionListenerList"].append(pluginObj)
 
     async def init():
         meObj = await client.get_me()
@@ -55,7 +59,7 @@ def start():
     @client.on(events.NewMessage)
     async def onMessageReceived(event):
         try:
-            if event.sender_id == myInfo.id:
+            if event.out:
                 if event.raw_text.startswith(COMMAND_HEADER):
                     commArgs = event.raw_text.split(" ")
                     commStr = commArgs[0][len(COMMAND_HEADER):]
@@ -64,6 +68,14 @@ def start():
 
             for plugin in pluginDict["plainMessageListenerList"]:
                 await plugin.onMessageReceivedListener(client, event, event.raw_text)
+        except Exception as ex:
+            logging.warning("Exception: ", ex)
+
+    @client.on(events.chataction.ChatAction)
+    async def onChatAction(event):
+        try:
+            for plugin in pluginDict["chatActionListenerList"]:
+                await plugin.onChatActionListener(client, event)
         except Exception as ex:
             logging.warning("Exception: ", ex)
 

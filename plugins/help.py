@@ -3,8 +3,9 @@ class pluginClass:
     help <插件名字> - 查看插件帮助信息"""
     registCommand = "help",
     listenPlainMessage = False
+    listenChatAction = False
 
-    async def onCommandMessageReceivedListener(client, event, command, args):
+    async def onCommandMessageReceivedListener(self, client, event, command, args):
         from userbot import pluginDict
         if not args:
             tempText = "已加载的插件有:\n"

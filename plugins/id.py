@@ -2,8 +2,9 @@ class pluginClass:
     """打印相关 ID 信息"""
     registCommand = "id",
     listenPlainMessage = False
+    listenChatAction = False
 
-    async def onCommandMessageReceivedListener(client, event, command, args):
+    async def onCommandMessageReceivedListener(self, client, event, command, args):
         # chat = await event.get_chat()
         # sender = await event.get_sender()
         tempText = "chat_id: {chat_id}\nsender_id: {sender_id}\nmessage_id: {message_id}\n".format(

@@ -3,8 +3,9 @@ class pluginClass:
     用法 re <次数>"""
     registCommand = "re",
     listenPlainMessage = False
+    listenChatAction = False
 
-    async def onCommandMessageReceivedListener(client, event, command, args):
+    async def onCommandMessageReceivedListener(self, client, event, command, args):
         if event.reply_to_msg_id:
             await client.delete_messages(event.chat_id, event.message)
             try:

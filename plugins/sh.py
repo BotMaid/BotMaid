@@ -4,8 +4,9 @@ class pluginClass:
     ⚠️注意: 不要执行无法自动结束的命令"""
     registCommand = "sh",
     listenPlainMessage = False
+    listenChatAction = False
 
-    async def onCommandMessageReceivedListener(client, event, command, args):
+    async def onCommandMessageReceivedListener(self, client, event, command, args):
         import io
         import subprocess
 
